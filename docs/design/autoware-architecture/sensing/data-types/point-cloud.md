@@ -104,9 +104,9 @@ You should map (livox to autoware)
 
 when constructing the point cloud.
 
-##### Robosense RS-LiDAR-16
+##### RoboSense RS-LiDAR-16
 
-[Robosense RS-LiDAR-16 User Manual](https://cdn.robosense.cn/20200723161715_42428.pdf)
+[RoboSense RS-LiDAR-16 User Manual](https://cdn.robosense.cn/20200723161715_42428.pdf)
 
 No mapping required, same as Velodyne VLP-16.
 
