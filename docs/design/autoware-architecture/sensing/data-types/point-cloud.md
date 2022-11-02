@@ -183,9 +183,9 @@ The header of the point cloud message is expected to have the time of the earlie
 
 !!! note
 
-    The `sec` field is `int32` in ROS2 humble. The largest value it can represent is 2^31 seconds, it is subject to 
+    The `sec` field is `int32` in ROS2 humble. The largest value it can represent is 2^31 seconds, it is subject to
     year 2038 problems. We will wait for actions on ROS2 community side.
-    
+
     **More info at:** https://github.com/ros2/rcl_interfaces/issues/85
 
 #### Individual point time
