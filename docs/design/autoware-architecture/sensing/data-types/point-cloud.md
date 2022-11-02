@@ -10,19 +10,19 @@ This pipeline covers the flow of data from drivers to the perception stack.
 
 ```mermaid
 graph TD
-    Driver["Lidar Driver"] -->|"Cloud XYZIRCT"| FilterDC["Distortion Corrector Filter"]
+    Driver["Lidar Driver"] -->|"Cloud XYZIRCT"| FilterDC["Motion Distortion Corrector Filter"]
 
     subgraph "sensing"
     FilterDC -->|"Cloud XYZIRC"| FilterOF["Outlier Remover Filter"]
-    FilterOF -->|"Cloud XYZI"| FilterDS["Downsampler Filter"]
-    FilterDS -->|"Cloud XYZI"| FilterTrans["Cloud Transformer"]
-    FilterTrans -->|"Cloud XYZI"| FilterPR["Polygon Remover Filter / CropBox Filter"]
+    FilterOF -->|"Cloud XYZIRC"| FilterDS["Downsampler Filter"]
+    FilterDS -->|"Cloud XYZIRC"| FilterTrans["Cloud Transformer"]
+    FilterTrans -->|"Cloud XYZIRC"| FilterPR["Polygon Remover Filter / CropBox Filter"]
 
-    FilterPR -->|"Cloud XYZI"| FilterC["Cloud Concatenator"]
-    FilterX["..."] -->|"Cloud XYZI (i)"| FilterC
+    FilterPR -->|"Cloud XYZIRC"| FilterC["Cloud Concatenator"]
+    FilterX["..."] -->|"Cloud XYZIRC (i)"| FilterC
     end
 
-    FilterC -->|"Cloud XYZI"| SegGr["Ground Segmentation"]
+    FilterC -->|"Cloud XYZIRC"| SegGr["Ground Segmentation"]
 ```
 
 ## List of modules
@@ -135,14 +135,54 @@ So it is advised to map the [0, 255] to [0, 100] range.
 
 ### Return type
 
+Various lidars support multiple return modes. Velodyne lidars support **Strongest** and **Last** return modes.
+
+In the `PointXYZIRCT` and `PointXYZIRC` types, `R` field represents return mode with an `UINT8`.
+
+| R (return type) | Description          |
+|-----------------|----------------------|
+| `0`             | Unknown / Not Marked |
+| `1`             | Strongest            |
+| `2`             | Last                 |
+
 ### Channel
 
 The channel field is used to identify the vertical channel of the laser that measured the point.
+In various lidar manuals or literature, it can also be called *laser id*, *ring*, *laser line*.
 
-For Velodyne VLP-16, there are 16 channels. The channels are numbered from 0 to 15, starting from the top of the lidar.
+For Velodyne VLP-16, there are 16 channels. Default order of channels in drivers are generally in firing order.
 
-#### Timing of the channels
+In the `PointXYZIRCT` and `PointXYZIRC` types, `C` field represents the vertical channel id with an `UINT16`.
 
 #### Solid state and petal pattern lidars
 
+!!! warning
+
+    This section is subject to change. Following are suggestions and open for discussion.
+
+For solid state lidars that have lines, assign row number as the channel id.
+
+For petal pattern lidars, you can keep channel 0.
+
 ### Time
+
+In lidar point clouds, each point measurement can have its individual time stamp.
+This information can be used to eliminate the motion blur that is caused by the movement of the lidar during the scan.
+
+#### Point cloud header time
+
+The header contains a [Time field](https://github.com/ros2/rcl_interfaces/blob/rolling/builtin_interfaces/msg/Time.msg).
+The time field has 2 components:
+
+| Field     | Type     | Description                                       |
+|-----------|----------|---------------------------------------------------|
+| `sec`     | `int32`  | Unix time (seconds elapsed since January 1, 1970) |
+| `nanosec` | `uint32` | Nanoseconds elapsed since the `sec` field         |
+
+The header of the point cloud message is expected to have the time of the earliest point it has.
+
+#### Individual point time
+
+Each `PointXYZIRCT` point type has the `T` field for representing the nanoseconds passed since the first-shot point of the point cloud.
+
+To calculate exact time each point was shot, the `T` nanoseconds are added to the header time.
