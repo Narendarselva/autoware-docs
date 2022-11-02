@@ -140,7 +140,7 @@ Various lidars support multiple return modes. Velodyne lidars support **Stronges
 In the `PointXYZIRCT` and `PointXYZIRC` types, `R` field represents return mode with an `UINT8`.
 
 | R (return type) | Description          |
-|-----------------|----------------------|
+| --------------- | -------------------- |
 | `0`             | Unknown / Not Marked |
 | `1`             | Strongest            |
 | `2`             | Last                 |
@@ -148,7 +148,7 @@ In the `PointXYZIRCT` and `PointXYZIRC` types, `R` field represents return mode 
 ### Channel
 
 The channel field is used to identify the vertical channel of the laser that measured the point.
-In various lidar manuals or literature, it can also be called *laser id*, *ring*, *laser line*.
+In various lidar manuals or literature, it can also be called _laser id_, _ring_, _laser line_.
 
 For Velodyne VLP-16, there are 16 channels. Default order of channels in drivers are generally in firing order.
 
@@ -175,7 +175,7 @@ The header contains a [Time field](https://github.com/ros2/rcl_interfaces/blob/r
 The time field has 2 components:
 
 | Field     | Type     | Description                                       |
-|-----------|----------|---------------------------------------------------|
+| --------- | -------- | ------------------------------------------------- |
 | `sec`     | `int32`  | Unix time (seconds elapsed since January 1, 1970) |
 | `nanosec` | `uint32` | Nanoseconds elapsed since the `sec` field         |
 
