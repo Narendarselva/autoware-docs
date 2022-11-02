@@ -54,11 +54,11 @@ We will use following ranges for intensity, compatible with [the VLP16 User Manu
 Quoting from the VLP-16 User Manual:
 
 > For each laser measurement, a reflectivity byte is returned in addition to distance.
-> Reflectivity byte values are segmented into two ranges, allowing software to distinguish diffuse reflectors (e.g. tree trunks, clothing) in the low range from retrore-
-> flectors (e.g. road signs, license plates) in the high range.
+> Reflectivity byte values are segmented into two ranges, allowing software to distinguish diffuse reflectors
+> (e.g. tree trunks, clothing) in the low range from retroreflectors (e.g. road signs, license plates) in the high range.
 > A retroreflector reflects light back to its source with a minimum of scattering.
-> The VLP-16 provides its own light, with negligible separation between transmitting laser and receiving detector, so retroreflecting surfaces pop with reflected IR light
-> compared to diffuse reflectors that tend to scatter reflected energy.
+> The VLP-16 provides its own light, with negligible separation between transmitting laser and receiving detector, so
+> retroreflecting surfaces pop with reflected IR light compared to diffuse reflectors that tend to scatter reflected energy.
 >
 > - Diffuse reflectors report values from 0 to 100 for reflectivities from 0% to 100%.
 > - Retroreflectors report values from 101 to 255, where 255 represents an ideal reflection.
