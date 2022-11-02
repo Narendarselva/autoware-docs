@@ -122,7 +122,7 @@ So it is advised to map the 16 bit reflectivity to [0, 100] range.
 
 ##### Leishen CH64W
 
-[I couldnt get the english user manual, link of website](http://www.lslidar.com/en/down)
+[I couldn't get the english user manual, link of website](http://www.lslidar.com/en/down)
 
 In a user manual I was able to find it says:
 
