@@ -181,8 +181,20 @@ The time field has 2 components:
 
 The header of the point cloud message is expected to have the time of the earliest point it has.
 
+!!! note
+
+    The `sec` field is `int32` in ROS2 humble. The largest value it can represent is 2^31 seconds, it is subject to 
+    year 2038 problems. We will wait for actions on ROS2 community side.
+    
+    **More info at:** https://github.com/ros2/rcl_interfaces/issues/85
+
 #### Individual point time
 
 Each `PointXYZIRCT` point type has the `T` field for representing the nanoseconds passed since the first-shot point of the point cloud.
 
 To calculate exact time each point was shot, the `T` nanoseconds are added to the header time.
+
+!!! note
+
+    The `T` field is `uint32` type. The largest value it can represent is 2^32 nanoseconds, which equates to roughly
+    4.29 seconds. Usual point clouds don't last more than 100ms for full cycle. So this field should be enough.
