@@ -10,16 +10,16 @@ This pipeline covers the flow of data from drivers to the perception stack.
 
 ```mermaid
 graph TD
-    Driver["Lidar Driver"] -->|"Cloud XYZIRCT"| FilterDC["Motion Distortion Corrector Filter"]
+    Driver["Lidar Driver"] -->|"Cloud XYZIRCT"| FilterPR["Polygon Remover Filter / CropBox Filter"]
 
     subgraph "sensing"
+    FilterPR -->|"Cloud XYZIRCT"| FilterDC["Motion Distortion Corrector Filter"]
     FilterDC -->|"Cloud XYZIRC"| FilterOF["Outlier Remover Filter"]
     FilterOF -->|"Cloud XYZIRC"| FilterDS["Downsampler Filter"]
     FilterDS -->|"Cloud XYZIRC"| FilterTrans["Cloud Transformer"]
-    FilterTrans -->|"Cloud XYZIRC"| FilterPR["Polygon Remover Filter / CropBox Filter"]
+    FilterTrans -->|"Cloud XYZIRC"| FilterC
 
-    FilterPR -->|"Cloud XYZIRC"| FilterC["Cloud Concatenator"]
-    FilterX["..."] -->|"Cloud XYZIRC (i)"| FilterC
+    FilterX["..."] -->|"Cloud XYZIRC (i)"| FilterC["Cloud Concatenator"]
     end
 
     FilterC -->|"Cloud XYZIRC"| SegGr["Ground Segmentation"]
