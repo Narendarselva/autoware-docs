@@ -47,6 +47,8 @@ In the ideal case, the driver is expected to output a point cloud with the `Poin
 | C (channel)     | UINT16   | Vertical channel id of the laser that measured the point                     |
 | T (time)        | UINT32   | Nanoseconds passed since the time of the header when this point was measured |
 
+If the `Motion Distortion Corrector Filter` won't be used, the `T (time)` field can be omitted, `PointXYZIRC` point type can be used.
+
 ### Intensity
 
 We will use following ranges for intensity, compatible with [the VLP16 User Manual](https://usermanual.wiki/Pdf/VLP16Manual.1719942037/view):
